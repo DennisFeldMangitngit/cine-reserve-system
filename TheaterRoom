@@ -1,0 +1,15 @@
+class TheaterRoom {
+    private String roomName;
+    private String roomType; 
+    private int capacity;
+
+    public TheaterRoom(String roomName, String roomType, int capacity) {
+        this.roomName = roomName;
+        this.roomType = roomType;
+        this.capacity = capacity;
+    }
+
+    public String getRoomType() {
+        return roomType;
+    }
+}
