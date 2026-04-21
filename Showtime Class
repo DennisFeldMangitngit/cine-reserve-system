@@ -1,0 +1,29 @@
+import java.util.*;
+
+class Showtime {
+    private Date dateTime;
+    private double price;
+    private List<Seat> seats;
+
+    public Showtime(Date dateTime, double price, List<Seat> seats) {
+        this.dateTime = dateTime;
+        this.price = price;
+        this.seats = seats;
+    }
+
+    public boolean checkAvailability(Seat seat) {
+        return !seat.isReserved();
+    }
+
+    public void reserveSeat(Seat seat) {
+        if (checkAvailability(seat)) {
+            seat.book();
+        } else {
+            throw new RuntimeException("Seat not available");
+        }
+    }
+
+    public double getPrice() {
+        return price;
+    }
+}
