@@ -1,0 +1,30 @@
+import java.util.*;
+
+public class Main {
+    public static void main(String[] args) {
+
+        Cinema cinema = new Cinema("CineReserve Pro", "Downtown");
+
+        Admin admin = new Admin("Alice");
+        Customer customer = new Customer("Bob");
+
+        Movie movie = new Movie("Inception");
+        admin.addMovie(cinema, movie);
+
+        List<Seat> seats = new ArrayList<>();
+        seats.add(new Seat('A', 1));
+        seats.add(new Seat('A', 2));
+
+        Showtime showtime = new Showtime(new Date(), 10.0, seats);
+        admin.setShowtime(movie, showtime);
+
+        customer.browseMovies(cinema);
+
+        // Booking
+        Booking booking = new Booking(1);
+        booking.addTicket(new AdultTicket(showtime.getPrice()));
+        booking.addTicket(new StudentTicket(showtime.getPrice()));
+
+        booking.confirmBooking();
+    }
+}
