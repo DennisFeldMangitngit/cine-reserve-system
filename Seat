@@ -1,0 +1,23 @@
+class Seat {
+    private char rowNumber;
+    private int seatNumber;
+    private boolean isReserved;
+
+    public Seat(char rowNumber, int seatNumber) {
+        this.rowNumber = rowNumber;
+        this.seatNumber = seatNumber;
+        this.isReserved = false;
+    }
+
+    public boolean isReserved() {
+        return isReserved;
+    }
+
+    public void book() {
+        if (!isReserved) {
+            isReserved = true;
+        } else {
+            throw new RuntimeException("Seat already reserved");
+        }
+    }
+}
