@@ -33,6 +33,28 @@ public class Booking {
         return totalPrice;
     }
 
+    public void confirmBooking() {
+        if (tickets.isEmpty()) {
+            System.out.println("No tickets added. Cannot confirm booking.");
+            return;
+        }
+        confirmed = true;
+        calculateTotalPrice();
+        System.out.println("\n========== BOOKING CONFIRMED ==========");
+        System.out.println("Booking ID   : #" + bookingId);
+        System.out.println("Date & Time  : " + bookingDateTime);
+        System.out.println("Tickets:");
+        for (int i = 0; i < tickets.size(); i++) {
+            System.out.println("  " + (i + 1) + ". " + tickets.get(i));
+        }
+        System.out.println("Seats Reserved:");
+        for (Seat s : reservedSeats) {
+            System.out.println("  - Seat " + s.getRowNumber() + s.getSeatNumber());
+        }
+        System.out.println("Total Price  : PHP " + String.format("%.2f", totalPrice));
+        System.out.println("=======================================\n");
+    }
+
     public int getBookingId() { return bookingId; }
     public boolean isConfirmed() { return confirmed; }
     public List<Ticket> getTickets() { return tickets; }
