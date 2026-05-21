@@ -1,0 +1,26 @@
+import java.util.*;
+
+public class Movie {
+    private String title;
+    private List<Showtime> showtimes;
+
+    public Movie(String title) {
+        this.title = title;
+        this.showtimes = new ArrayList<>();
+    }
+
+    public void addShowtime(Showtime showtime) {
+        showtimes.add(showtime);
+    }
+
+    public List<Showtime> getShowtimes() {
+        return showtimes;
+    }
+
+    public String getTitle() { return title; }
+
+    @Override
+    public String toString() {
+        return title;
+    }
+}
