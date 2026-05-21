@@ -1,0 +1,81 @@
+import java.util.*;
+
+public class Main {
+
+    static Scanner scanner = new Scanner(System.in);
+    static Cinema cinema;
+    static Admin admin;
+    static Customer currentCustomer;
+    static int bookingCounter = 1;
+
+    public static void main(String[] args) {
+        // Initialize Cinema
+        cinema = new Cinema("CineReserve Pro", "Downtown");
+        admin = new Admin("Admin");
+
+        // Seed some default data
+        seedDefaultData();
+
+        System.out.println("=============================================");
+        System.out.println("       Welcome to CineReserve Pro           ");
+        System.out.println("       Location: " + cinema.getAddress());
+        System.out.println("=============================================");
+
+        mainMenu();
+    }
+
+    static void seedDefaultData() {
+        // Default theater rooms
+        TheaterRoom room1 = new TheaterRoom("Room 1", "Standard", 30);
+        TheaterRoom room2 = new TheaterRoom("Room 2", "Gold Class", 20);
+        admin.manageRooms(cinema, room1);
+        admin.manageRooms(cinema, room2);
+
+        // Default movies with showtimes
+        Movie movie1 = new Movie("Inception");
+        List<Seat> seats1 = generateSeats('A', 5);
+        Showtime st1 = new Showtime(new Date(), 250.0, seats1);
+        admin.addMovie(cinema, movie1);
+        admin.setShowtime(movie1, st1);
+
+        Movie movie2 = new Movie("Interstellar");
+        List<Seat> seats2 = generateSeats('B', 5);
+        Showtime st2 = new Showtime(new Date(), 300.0, seats2);
+        admin.addMovie(cinema, movie2);
+        admin.setShowtime(movie2, st2);
+    }
+
+    static List<Seat> generateSeats(char row, int count) {
+        List<Seat> seats = new ArrayList<>();
+        for (int i = 1; i <= count; i++) {
+            seats.add(new Seat(row, i));
+        }
+        return seats;
+    }
+
+    static void mainMenu() {
+        while (true) {
+            System.out.println("\n============== MAIN MENU ==============");
+            System.out.println("1. Admin Panel");
+            System.out.println("2. Customer Portal");
+            System.out.println("3. Exit");
+            System.out.print("Choose an option: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1": adminPanel(); break;
+                case "2": customerPortal(); break;
+                case "3":
+                    System.out.println("Thank you for using CineReserve Pro. Goodbye!");
+                    System.exit(0);
+                    break;
+                default:
+                    System.out.println("Invalid option. Please try again.");
+            }
+        }
+    }
+
+    // ==================== ADMIN PANEL ====================
+
+    static void adminPanel() {
