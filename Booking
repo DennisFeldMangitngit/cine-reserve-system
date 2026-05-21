@@ -17,6 +17,22 @@ public class Booking {
         this.confirmed = false;
     }
 
+    public void addTicket(Ticket ticket) {
+        tickets.add(ticket);
+    }
+
+    public void addSeat(Seat seat) {
+        reservedSeats.add(seat);
+    }
+
+    public double calculateTotalPrice() {
+        totalPrice = 0;
+        for (Ticket t : tickets) {
+            totalPrice += t.getPrice();
+        }
+        return totalPrice;
+    }
+
     public int getBookingId() { return bookingId; }
     public boolean isConfirmed() { return confirmed; }
     public List<Ticket> getTickets() { return tickets; }
