@@ -129,4 +129,70 @@ public class Main {
             System.out.println("Invalid input.");
         }
     }
+static void adminAddShowtime() {
+        List movies = cinema.getMovies();
+        if (movies.isEmpty()) { System.out.println("No movies available. Add a movie first."); return; }
+        viewAllMovies();
+        System.out.print("Select movie number: ");
+        try {
+            int idx = Integer.parseInt(scanner.nextLine().trim()) - 1;
+            if (idx < 0 || idx >= movies.size()) { System.out.println("Invalid selection."); return; }
+            Movie movie = movies.get(idx);
+
+            System.out.print("Enter ticket price (PHP): ");
+            double price = Double.parseDouble(scanner.nextLine().trim());
+
+            System.out.print("Enter number of seats (rows will start from next available letter): ");
+            int seatCount = Integer.parseInt(scanner.nextLine().trim());
+
+            char row = (char) ('A' + movie.getShowtimes().size());
+            List seats = generateSeats(row, seatCount);
+            Showtime showtime = new Showtime(new Date(), price, seats);
+            admin.setShowtime(movie, showtime);
+            System.out.println("Showtime added with " + seatCount + " seats (Row " + row + ").");
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid number format.");
+        }
+    }
+
+    static void adminAddTheaterRoom() {
+        System.out.print("Enter Room Name: ");
+        String roomName = scanner.nextLine().trim();
+
+        System.out.println("Select Room Type:");
+        System.out.println("1. Standard");
+        System.out.println("2. Gold Class");
+        System.out.print("Choice: ");
+        String typeChoice = scanner.nextLine().trim();
+        String roomType = typeChoice.equals("2") ? "Gold Class" : "Standard";
+
+        System.out.print("Enter Capacity: ");
+        try {
+            int capacity = Integer.parseInt(scanner.nextLine().trim());
+            TheaterRoom room = new TheaterRoom(roomName, roomType, capacity);
+            admin.manageRooms(cinema, room);
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid capacity.");
+        }
+    }
+
+    static void viewAllMovies() {
+        List movies = cinema.getMovies();
+        if (movies.isEmpty()) { System.out.println("No movies available."); return; }
+        System.out.println("\n--- Movies ---");
+        for (int i = 0; i < movies.size(); i++) {
+            Movie m = movies.get(i);
+            System.out.println((i + 1) + ". " + m.getTitle()
+                    + " (" + m.getShowtimes().size() + " showtime(s))");
+        }
+    }
+
+    static void viewTheaterRooms() {
+        List rooms = cinema.getTheaterRooms();
+        if (rooms.isEmpty()) { System.out.println("No theater rooms available."); return; }
+        System.out.println("\n--- Theater Rooms ---");
+        for (int i = 0; i < rooms.size(); i++) {
+            System.out.println((i + 1) + ". " + rooms.get(i));
+        }
+    }
 
