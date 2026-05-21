@@ -79,3 +79,33 @@ public class Main {
     // ==================== ADMIN PANEL ====================
 
     static void adminPanel() {
+        System.out.print("\nEnter Admin Name: ");
+        String adminName = scanner.nextLine().trim();
+        admin = new Admin(adminName);
+
+        while (true) {
+            System.out.println("\n======== ADMIN PANEL (" + adminName + ") ========");
+            System.out.println("1. Add Movie");
+            System.out.println("2. Remove Movie");
+            System.out.println("3. Add Showtime to Movie");
+            System.out.println("4. Add Theater Room");
+            System.out.println("5. View All Movies");
+            System.out.println("6. View Theater Rooms");
+            System.out.println("7. Back to Main Menu");
+            System.out.print("Choose an option: ");
+
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1": adminAddMovie(); break;
+                case "2": adminRemoveMovie(); break;
+                case "3": adminAddShowtime(); break;
+                case "4": adminAddTheaterRoom(); break;
+                case "5": viewAllMovies(); break;
+                case "6": viewTheaterRooms(); break;
+                case "7": return;
+                default: System.out.println("Invalid option.");
+            }
+        }
+    }
+
