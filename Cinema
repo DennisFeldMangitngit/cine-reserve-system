@@ -13,6 +13,21 @@ public class Cinema {
         this.theaterRooms = new ArrayList<>();
     }
 
+    public void addMovie(Movie movie) {
+        movies.add(movie);
+        System.out.println("Movie added: " + movie.getTitle());
+    }
+
+    public void removeMovie(Movie movie) {
+        movies.remove(movie);
+        System.out.println("Movie removed: " + movie.getTitle());
+    }
+
+    public void addTheaterRoom(TheaterRoom room) {
+        theaterRooms.add(room);
+        System.out.println("Theater room added: " + room.getRoomName());
+    }
+
     public List<Movie> getMovies() {
         return movies;
     }
