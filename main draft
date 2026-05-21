@@ -108,4 +108,25 @@ public class Main {
             }
         }
     }
+    static void adminAddMovie() {
+        System.out.print("Enter Movie Title: ");
+        String title = scanner.nextLine().trim();
+        if (title.isEmpty()) { System.out.println("Title cannot be empty."); return; }
+        Movie movie = new Movie(title);
+        admin.addMovie(cinema, movie);
+    }
+
+    static void adminRemoveMovie() {
+        List<Movie> movies = cinema.getMovies();
+        if (movies.isEmpty()) { System.out.println("No movies to remove."); return; }
+        viewAllMovies();
+        System.out.print("Enter movie number to remove: ");
+        try {
+            int idx = Integer.parseInt(scanner.nextLine().trim()) - 1;
+            if (idx < 0 || idx >= movies.size()) { System.out.println("Invalid selection."); return; }
+            admin.removeMovie(cinema, movies.get(idx));
+        } catch (NumberFormatException e) {
+            System.out.println("Invalid input.");
+        }
+    }
 
