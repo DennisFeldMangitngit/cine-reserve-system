@@ -108,6 +108,7 @@ public class Main {
             }
         }
     }
+
     static void adminAddMovie() {
         System.out.print("Enter Movie Title: ");
         String title = scanner.nextLine().trim();
@@ -129,8 +130,9 @@ public class Main {
             System.out.println("Invalid input.");
         }
     }
-static void adminAddShowtime() {
-        List movies = cinema.getMovies();
+
+    static void adminAddShowtime() {
+        List<Movie> movies = cinema.getMovies();
         if (movies.isEmpty()) { System.out.println("No movies available. Add a movie first."); return; }
         viewAllMovies();
         System.out.print("Select movie number: ");
@@ -146,7 +148,7 @@ static void adminAddShowtime() {
             int seatCount = Integer.parseInt(scanner.nextLine().trim());
 
             char row = (char) ('A' + movie.getShowtimes().size());
-            List seats = generateSeats(row, seatCount);
+            List<Seat> seats = generateSeats(row, seatCount);
             Showtime showtime = new Showtime(new Date(), price, seats);
             admin.setShowtime(movie, showtime);
             System.out.println("Showtime added with " + seatCount + " seats (Row " + row + ").");
@@ -177,7 +179,7 @@ static void adminAddShowtime() {
     }
 
     static void viewAllMovies() {
-        List movies = cinema.getMovies();
+        List<Movie> movies = cinema.getMovies();
         if (movies.isEmpty()) { System.out.println("No movies available."); return; }
         System.out.println("\n--- Movies ---");
         for (int i = 0; i < movies.size(); i++) {
@@ -188,7 +190,7 @@ static void adminAddShowtime() {
     }
 
     static void viewTheaterRooms() {
-        List rooms = cinema.getTheaterRooms();
+        List<TheaterRoom> rooms = cinema.getTheaterRooms();
         if (rooms.isEmpty()) { System.out.println("No theater rooms available."); return; }
         System.out.println("\n--- Theater Rooms ---");
         for (int i = 0; i < rooms.size(); i++) {
@@ -196,34 +198,36 @@ static void adminAddShowtime() {
         }
     }
 
-static void customerPortal() {
-    System.out.print("\nEnter Your Name: ");
-    String customerName = scanner.nextLine().trim();
-    if (customerName.isEmpty()) customerName = "Guest";
-    currentCustomer = new Customer(customerName);
-    System.out.println("Welcome, " + customerName + "!");
+    // ==================== CUSTOMER PORTAL ====================
 
-    while (true) {
-        System.out.println("\n======== CUSTOMER PORTAL (" + customerName + ") ========");
-        System.out.println("1. Browse Movies");
-        System.out.println("2. Book Tickets");
-        System.out.println("3. View Booking History");
-        System.out.println("4. Back to Main Menu");
-        System.out.print("Choose an option: ");
+    static void customerPortal() {
+        System.out.print("\nEnter Your Name: ");
+        String customerName = scanner.nextLine().trim();
+        if (customerName.isEmpty()) customerName = "Guest";
+        currentCustomer = new Customer(customerName);
+        System.out.println("Welcome, " + customerName + "!");
 
-        String choice = scanner.nextLine().trim();
+        while (true) {
+            System.out.println("\n======== CUSTOMER PORTAL (" + customerName + ") ========");
+            System.out.println("1. Browse Movies");
+            System.out.println("2. Book Tickets");
+            System.out.println("3. View Booking History");
+            System.out.println("4. Back to Main Menu");
+            System.out.print("Choose an option: ");
 
-        switch (choice) {
-            case "1": currentCustomer.browseMovies(cinema); break;
-            case "2": bookTickets(); break;
-            case "3": currentCustomer.getBookingHistory(); break;
-            case "4": return;
-            default: System.out.println("Invalid option.");
+            String choice = scanner.nextLine().trim();
+
+            switch (choice) {
+                case "1": currentCustomer.browseMovies(cinema); break;
+                case "2": bookTickets(); break;
+                case "3": currentCustomer.getBookingHistory(); break;
+                case "4": return;
+                default: System.out.println("Invalid option.");
+            }
         }
     }
-}
 
-static void bookTickets() {
+    static void bookTickets() {
         List<Movie> movies = cinema.getMovies();
         if (movies.isEmpty()) { System.out.println("No movies available for booking."); return; }
 
@@ -349,4 +353,3 @@ static void bookTickets() {
         }
     }
 }
-
