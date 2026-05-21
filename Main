@@ -196,3 +196,30 @@ static void adminAddShowtime() {
         }
     }
 
+static void customerPortal() {
+    System.out.print("\nEnter Your Name: ");
+    String customerName = scanner.nextLine().trim();
+    if (customerName.isEmpty()) customerName = "Guest";
+    currentCustomer = new Customer(customerName);
+    System.out.println("Welcome, " + customerName + "!");
+
+    while (true) {
+        System.out.println("\n======== CUSTOMER PORTAL (" + customerName + ") ========");
+        System.out.println("1. Browse Movies");
+        System.out.println("2. Book Tickets");
+        System.out.println("3. View Booking History");
+        System.out.println("4. Back to Main Menu");
+        System.out.print("Choose an option: ");
+
+        String choice = scanner.nextLine().trim();
+
+        switch (choice) {
+            case "1": currentCustomer.browseMovies(cinema); break;
+            case "2": bookTickets(); break;
+            case "3": currentCustomer.getBookingHistory(); break;
+            case "4": return;
+            default: System.out.println("Invalid option.");
+        }
+    }
+}
+
