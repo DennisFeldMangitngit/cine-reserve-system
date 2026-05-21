@@ -1,4 +1,4 @@
-class Seat {
+public class Seat {
     private char rowNumber;
     private int seatNumber;
     private boolean isReserved;
@@ -9,6 +9,9 @@ class Seat {
         this.isReserved = false;
     }
 
+    public char getRowNumber() { return rowNumber; }
+    public int getSeatNumber() { return seatNumber; }
+
     public boolean isReserved() {
         return isReserved;
     }
@@ -17,7 +20,12 @@ class Seat {
         if (!isReserved) {
             isReserved = true;
         } else {
-            throw new RuntimeException("Seat already reserved");
+            throw new RuntimeException("Seat " + this + " is already reserved.");
         }
+    }
+
+    @Override
+    public String toString() {
+        return rowNumber + "" + seatNumber + (isReserved ? " [RESERVED]" : " [AVAILABLE]");
     }
 }
