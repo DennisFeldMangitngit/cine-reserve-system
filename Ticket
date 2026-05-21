@@ -21,9 +21,36 @@ class AdultTicket extends Ticket {
 
     @Override
     public double getPrice() {
-        return basePrice; // Full price
-    }
+        return basePrice;     }
 
     @Override
     public String getType() { return "Adult"; }
+}
+
+class StudentTicket extends Ticket {
+    public StudentTicket(double basePrice) {
+        super(basePrice);
+    }
+
+    @Override
+    public double getPrice() {
+        return basePrice * 0.80;
+    }
+
+    @Override
+    public String getType() { return "Student (20% off)"; }
+}
+
+class SeniorTicket extends Ticket {
+    public SeniorTicket(double basePrice) {
+        super(basePrice);
+    }
+
+    @Override
+    public double getPrice() {
+        return basePrice * 0.75; 
+    }
+
+    @Override
+    public String getType() { return "Senior (25% off)"; }
 }
