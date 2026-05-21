@@ -13,3 +13,17 @@ public abstract class Ticket {
         return getType() + " Ticket - PHP " + String.format("%.2f", getPrice());
     }
 }
+
+class AdultTicket extends Ticket {
+    public AdultTicket(double basePrice) {
+        super(basePrice);
+    }
+
+    @Override
+    public double getPrice() {
+        return basePrice; // Full price
+    }
+
+    @Override
+    public String getType() { return "Adult"; }
+}
