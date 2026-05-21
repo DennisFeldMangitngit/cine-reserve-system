@@ -1,0 +1,15 @@
+public abstract class Ticket {
+    protected double basePrice;
+
+    public Ticket(double basePrice) {
+        this.basePrice = basePrice;
+    }
+
+    public abstract double getPrice();
+    public abstract String getType();
+
+    @Override
+    public String toString() {
+        return getType() + " Ticket - PHP " + String.format("%.2f", getPrice());
+    }
+}
