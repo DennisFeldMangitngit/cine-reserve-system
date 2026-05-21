@@ -1,0 +1,12 @@
+import java.util.*;
+
+public class Customer extends User {
+    private List<Booking> bookingHistory;
+
+    public Customer(String name) {
+        super(name);
+        this.bookingHistory = new ArrayList<>();
+    }
+
+    public List<Booking> getBookings() { return bookingHistory; }
+}
