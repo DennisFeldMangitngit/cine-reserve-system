@@ -1,0 +1,23 @@
+import java.util.*;
+
+public class Booking {
+    private int bookingId;
+    private Date bookingDateTime;
+    private double totalPrice;
+    private List<Ticket> tickets;
+    private List<Seat> reservedSeats;
+    private boolean confirmed;
+
+    public Booking(int bookingId) {
+        this.bookingId = bookingId;
+        this.bookingDateTime = new Date();
+        this.tickets = new ArrayList<>();
+        this.reservedSeats = new ArrayList<>();
+        this.totalPrice = 0;
+        this.confirmed = false;
+    }
+
+    public int getBookingId() { return bookingId; }
+    public boolean isConfirmed() { return confirmed; }
+    public List<Ticket> getTickets() { return tickets; }
+}
