@@ -1,0 +1,23 @@
+public class Admin extends User {
+
+    public Admin(String name) {
+        super(name);
+    }
+
+    public void addMovie(Cinema cinema, Movie movie) {
+        cinema.addMovie(movie);
+    }
+
+    public void removeMovie(Cinema cinema, Movie movie) {
+        cinema.removeMovie(movie);
+    }
+
+    public void setShowtime(Movie movie, Showtime showtime) {
+        movie.addShowtime(showtime);
+        System.out.println("Showtime set for: " + movie.getTitle());
+    }
+
+    public void manageRooms(Cinema cinema, TheaterRoom room) {
+        cinema.addTheaterRoom(room);
+    }
+}
