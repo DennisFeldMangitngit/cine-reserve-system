@@ -20,5 +20,11 @@ public class Customer extends User {
         }
     }
 
+    public void selectSeats(Showtime showtime, List<Seat> selectedSeats) {
+        for (Seat seat : selectedSeats) {
+            showtime.reserveSeat(seat);
+        }
+    }
+
     public List<Booking> getBookings() { return bookingHistory; }
 }
