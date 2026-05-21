@@ -1,0 +1,43 @@
+import java.util.*;
+
+public class Showtime {
+    private Date dateTime;
+    private double price;
+    private List<Seat> seats;
+
+    public Showtime(Date dateTime, double price, List<Seat> seats) {
+        this.dateTime = dateTime;
+        this.price = price;
+        this.seats = seats;
+    }
+
+    public boolean checkAvailability(Seat seat) {
+        return !seat.isReserved();
+    }
+
+    public void reserveSeat(Seat seat) {
+        if (checkAvailability(seat)) {
+            seat.book();
+        } else {
+            throw new RuntimeException("Seat " + seat + " is not available.");
+        }
+    }
+
+    public List<Seat> getAvailableSeats() {
+        List<Seat> available = new ArrayList<>();
+        for (Seat s : seats) {
+            if (!s.isReserved()) available.add(s);
+        }
+        return available;
+    }
+
+    public List<Seat> getAllSeats() { return seats; }
+    public double getPrice() { return price; }
+    public Date getDateTime() { return dateTime; }
+
+    @Override
+    public String toString() {
+        return "Showtime: " + dateTime + " | Price: PHP " + String.format("%.2f", price)
+                + " | Available Seats: " + getAvailableSeats().size() + "/" + seats.size();
+    }
+}
