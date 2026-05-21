@@ -8,5 +8,17 @@ public class Customer extends User {
         this.bookingHistory = new ArrayList<>();
     }
 
+    public void browseMovies(Cinema cinema) {
+        List<Movie> movies = cinema.getMovies();
+        if (movies.isEmpty()) {
+            System.out.println("No movies currently available.");
+            return;
+        }
+        System.out.println("\n--- Movies available at " + cinema.getName() + " ---");
+        for (int i = 0; i < movies.size(); i++) {
+            System.out.println((i + 1) + ". " + movies.get(i).getTitle());
+        }
+    }
+
     public List<Booking> getBookings() { return bookingHistory; }
 }
