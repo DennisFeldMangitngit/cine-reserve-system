@@ -26,5 +26,22 @@ public class Customer extends User {
         }
     }
 
+    public void addBooking(Booking booking) {
+        bookingHistory.add(booking);
+    }
+
+    public void getBookingHistory() {
+        if (bookingHistory.isEmpty()) {
+            System.out.println("No booking history found.");
+            return;
+        }
+        System.out.println("\n--- Booking History for " + name + " ---");
+        for (Booking b : bookingHistory) {
+            System.out.println("Booking #" + b.getBookingId()
+                    + " | Tickets: " + b.getTickets().size()
+                    + " | Status: " + (b.isConfirmed() ? "Confirmed" : "Pending"));
+        }
+    }
+
     public List<Booking> getBookings() { return bookingHistory; }
 }
