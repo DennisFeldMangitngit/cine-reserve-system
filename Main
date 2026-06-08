@@ -9,11 +9,9 @@ public class Main {
     static int bookingCounter = 1;
 
     public static void main(String[] args) {
-        // Initialize Cinema
         cinema = new Cinema("CineReserve Pro", "Downtown");
         admin = new Admin("Admin");
 
-        // Seed some default data
         seedDefaultData();
 
         System.out.println("=============================================");
@@ -25,13 +23,11 @@ public class Main {
     }
 
     static void seedDefaultData() {
-        // Default theater rooms
         TheaterRoom room1 = new TheaterRoom("Room 1", "Standard", 30);
         TheaterRoom room2 = new TheaterRoom("Room 2", "Gold Class", 20);
         admin.manageRooms(cinema, room1);
         admin.manageRooms(cinema, room2);
 
-        // Default movies with showtimes
         Movie movie1 = new Movie("Inception");
         List<Seat> seats1 = generateSeats('A', 5);
         Showtime st1 = new Showtime(new Date(), 250.0, seats1);
@@ -115,6 +111,7 @@ public class Main {
         if (title.isEmpty()) { System.out.println("Title cannot be empty."); return; }
         Movie movie = new Movie(title);
         admin.addMovie(cinema, movie);
+        System.out.println("Movie \"" + title + "\" added successfully.");
     }
 
     static void adminRemoveMovie() {
@@ -125,7 +122,9 @@ public class Main {
         try {
             int idx = Integer.parseInt(scanner.nextLine().trim()) - 1;
             if (idx < 0 || idx >= movies.size()) { System.out.println("Invalid selection."); return; }
-            admin.removeMovie(cinema, movies.get(idx));
+            Movie toRemove = movies.get(idx);
+            admin.removeMovie(cinema, toRemove);
+            System.out.println("Movie \"" + toRemove.getTitle() + "\" removed successfully.");
         } catch (NumberFormatException e) {
             System.out.println("Invalid input.");
         }
@@ -144,14 +143,14 @@ public class Main {
             System.out.print("Enter ticket price (PHP): ");
             double price = Double.parseDouble(scanner.nextLine().trim());
 
-            System.out.print("Enter number of seats (rows will start from next available letter): ");
+            System.out.print("Enter number of seats: ");
             int seatCount = Integer.parseInt(scanner.nextLine().trim());
 
             char row = (char) ('A' + movie.getShowtimes().size());
             List<Seat> seats = generateSeats(row, seatCount);
             Showtime showtime = new Showtime(new Date(), price, seats);
             admin.setShowtime(movie, showtime);
-            System.out.println("Showtime added with " + seatCount + " seats (Row " + row + ").");
+            System.out.println("Showtime added for \"" + movie.getTitle() + "\" with " + seatCount + " seats (Row " + row + ").");
         } catch (NumberFormatException e) {
             System.out.println("Invalid number format.");
         }
@@ -173,6 +172,7 @@ public class Main {
             int capacity = Integer.parseInt(scanner.nextLine().trim());
             TheaterRoom room = new TheaterRoom(roomName, roomType, capacity);
             admin.manageRooms(cinema, room);
+            System.out.println("Theater room \"" + roomName + "\" (" + roomType + ") added successfully.");
         } catch (NumberFormatException e) {
             System.out.println("Invalid capacity.");
         }
@@ -231,7 +231,6 @@ public class Main {
         List<Movie> movies = cinema.getMovies();
         if (movies.isEmpty()) { System.out.println("No movies available for booking."); return; }
 
-        // Step 1: Browse & select movie
         currentCustomer.browseMovies(cinema);
         System.out.print("Select a movie number: ");
         int movieIdx;
@@ -244,7 +243,6 @@ public class Main {
         }
         Movie selectedMovie = movies.get(movieIdx);
 
-        // Step 2: Select showtime
         List<Showtime> showtimes = selectedMovie.getShowtimes();
         if (showtimes.isEmpty()) {
             System.out.println("No showtimes available for " + selectedMovie.getTitle());
@@ -265,7 +263,6 @@ public class Main {
         }
         Showtime selectedShowtime = showtimes.get(stIdx);
 
-        // Step 3: Choose seats
         List<Seat> availableSeats = selectedShowtime.getAvailableSeats();
         if (availableSeats.isEmpty()) { System.out.println("No available seats for this showtime."); return; }
 
@@ -311,10 +308,9 @@ public class Main {
 
         if (chosenSeats.isEmpty()) { System.out.println("No seats selected."); return; }
 
-        // Step 4: Choose ticket types
         Booking booking = new Booking(bookingCounter++);
         System.out.println("\n--- Select Ticket Type for Each Seat ---");
-        System.out.println("Ticket types: 1=Adult (Full), 2=Student (20% off), 3=Senior (25% off)");
+        System.out.println("1 = Adult (Full Price)  |  2 = Student (20% off)  |  3 = Senior (25% off)");
 
         for (Seat seat : chosenSeats) {
             System.out.print("Ticket type for Seat " + seat.getRowNumber() + seat.getSeatNumber() + ": ");
@@ -329,7 +325,6 @@ public class Main {
             booking.addSeat(seat);
         }
 
-        // Step 5: Reserve seats
         try {
             currentCustomer.selectSeats(selectedShowtime, chosenSeats);
         } catch (RuntimeException e) {
@@ -337,7 +332,6 @@ public class Main {
             return;
         }
 
-        // Step 6: Confirm
         System.out.print("\nConfirm booking? (y/n): ");
         String confirm = scanner.nextLine().trim().toLowerCase();
         if (confirm.equals("y")) {
@@ -345,11 +339,6 @@ public class Main {
             currentCustomer.addBooking(booking);
         } else {
             System.out.println("Booking cancelled.");
-            // Release seats back
-            for (Seat s : chosenSeats) {
-                // Note: seats are already marked reserved by selectSeats; 
-                // in a real system you'd roll back. Here we just notify.
-            }
         }
     }
 }
